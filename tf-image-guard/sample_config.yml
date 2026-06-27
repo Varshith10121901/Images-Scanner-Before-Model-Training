@@ -1,0 +1,56 @@
+# sample_config.yml
+# tf-image-guard configuration file
+# Pass with: tf-image-guard scan -i ./images -c sample_config.yml
+
+# ──────────────────────────────────────────────────────────────
+# Supported file extensions (case-insensitive)
+# ──────────────────────────────────────────────────────────────
+supported_extensions:
+  - .jpg
+  - .jpeg
+  - .png
+  - .bmp
+  - .gif
+  - .webp
+
+# ──────────────────────────────────────────────────────────────
+# Validation layers (set to false to skip a layer)
+# ──────────────────────────────────────────────────────────────
+validation:
+  filesystem_check: true      # Check zero-byte, permission, missing ext
+  pillow_decode: true         # Full Pillow open + verify (catches truncated files)
+  tensorflow_decode: true     # TensorFlow tf.image.decode_image check
+
+# ──────────────────────────────────────────────────────────────
+# TensorFlow settings
+# ──────────────────────────────────────────────────────────────
+tensorflow:
+  cpu_only: true              # Force CPU-only mode (avoids GPU allocation for scanning)
+  channels: 0                 # 0 = auto-detect channels; 1 = grayscale; 3 = RGB; 4 = RGBA
+
+# ──────────────────────────────────────────────────────────────
+# File size thresholds
+# ──────────────────────────────────────────────────────────────
+size_limits:
+  min_bytes: 100              # Files smaller than this are flagged as corrupted
+  max_bytes: null             # null = no upper limit (set e.g. 52428800 for 50MB)
+
+# ──────────────────────────────────────────────────────────────
+# Parallel workers for scanning
+# ──────────────────────────────────────────────────────────────
+workers: 4
+
+# ──────────────────────────────────────────────────────────────
+# Quarantine settings
+# ──────────────────────────────────────────────────────────────
+quarantine:
+  preserve_structure: true    # Mirrors original folder structure inside quarantine dir
+  generate_manifest: true     # Creates _manifest.json in quarantine dir
+
+# ──────────────────────────────────────────────────────────────
+# Reporting
+# ──────────────────────────────────────────────────────────────
+report:
+  format: console             # Options: console | json | csv
+  output_path: null           # null = stdout; set a path to write to file
+  include_ok_files: false     # Whether to include valid files in the report

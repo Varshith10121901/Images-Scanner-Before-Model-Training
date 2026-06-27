@@ -1,0 +1,56 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "tf-image-guard"
+version = "0.1.0"
+description = "A fault-tolerant CLI toolkit that validates and filters corrupted images for TensorFlow pipelines. Never stops execution — scans, quarantines, and reports bad files safely."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+keywords = ["tensorflow", "image", "validation", "cli", "dataset", "corruption", "cleaning"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "tensorflow>=2.10.0",
+    "Pillow>=9.0.0",
+    "click>=8.0.0",
+    "pyyaml>=6.0",
+    "tqdm>=4.60.0",
+    "rich>=13.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+]
+
+[project.scripts]
+tf-image-guard = "tf_image_guard.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/yourusername/tf-image-guard"
+Issues = "https://github.com/yourusername/tf-image-guard/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tf_image_guard"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
